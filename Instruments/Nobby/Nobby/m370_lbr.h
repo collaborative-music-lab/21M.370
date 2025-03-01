@@ -28,7 +28,8 @@
 
 #include "pinDefsv5.h"
 //#include "m370_Sensor.h"
-#include "src/m370_communication.h"
+//#include "src/m370_communication.h"
+#include "src/m370_serial_comms.h"
 #include "src/m370_digitalInput.h"
 #include "src/m370_analog.h"
 #include "src/LSM6.h"

@@ -110,17 +110,18 @@ def get_sequence(address, num):
         send_osc('8steps', 1, TEXT_NUMBERS[i], scaled_value)
         print(f"Sent: '8steps' {TEXT_NUMBERS[i]} {scaled_value} 1")
 
-    send_osc('decay', 1, 'D', DECAY_TIMES[num])
+    send_osc('slope', 2, 'DEPTH+/-', DECAY_TIMES[num])
 
+timeIncrement = 0
 def gen_sequence(address, val):
     """Generate a new sequence in response to an OSC message."""
     timeout.update()  # Reset timeout 
 
-    sequence = [0,0,0,0, 0,0,0,0]
 
     for i, value in enumerate(sequence):
-        scaled_value = val*(i+1) % 127  # Normalization
+        scaled_value = random()*32 + val # Normalization
         send_osc('8steps', 1, TEXT_NUMBERS[i], scaled_value)
+        send_osc('8steps', 2, TEXT_NUMBERS[i], scaled_value)
         print(f"Sent: '8steps' {TEXT_NUMBERS[i]} {scaled_value} 1")
 
 
@@ -141,6 +142,14 @@ dispatcher.map("/genSequence", gen_sequence)
 dispatcher.map("/paramName", mirror)
 dispatcher.map("/cancel", cancel_script)
 
+from math import floor
+
+def quantize(degree, scale=[0,2,4,5,7,9,11], base_note=60):
+    octave = floor(degree / len(scale))
+    midiNote = scale[degree % len(scale)]
+    return midiNote + octave * 12 + (base_note - 60)
+
+    
 
 async def loop():
     """Main loop to keep script running and check for timeout."""

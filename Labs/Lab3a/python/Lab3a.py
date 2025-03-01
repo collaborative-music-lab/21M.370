@@ -15,7 +15,7 @@ import asyncio
 # GLOBAL VARIABLES
 ######################
 euclidHits = 3
-euclidBeats = 8
+euclidBeats = 16
 euclidRotate = 0
 euclidPattern = []#euclid(euclidHits,euclidBeats,euclidRotate)
 

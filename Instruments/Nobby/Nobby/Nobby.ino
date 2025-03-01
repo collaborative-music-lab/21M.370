@@ -19,28 +19,8 @@
 
 const byte SERIAL_DEBUG = 0;
 
-// WiFi network name and password:
-// ignore this for now
-const char * ssid = "ssid"; //2.4GHz network only (no 5g)
-const char * password = "pw";
-
-////Firmware metadata
-String FIRMWARE[] = {
-  /*NAME*/ "Nobby",
-  /*VERSION*/ "0.1",
-  /*AUTHOR*/ "Ian Hattwick",
-  /*DATE*/ "Jan 15, 2022",
-  /*NOTES*/ "initial test"
-};
-
-
-//comms handles communication with Python
-//!!setting comMode to SERIAL_ONLY will force the ESP32 to 
-//begin sending serial data immediately, rather than waiting
-//for python to connect
-const comModes comMode = SERIAL_ONLY;
-
-m370_communication comms(comMode);
+//begin sending serial data immediately
+m370_serial_comms comms;
 
 /*********************************************
 ANALOG SETUP
@@ -62,7 +42,7 @@ m370_digitalInput sw[NUM_DIGITAL] = {
   m370_digitalInput(p6),//pin
   m370_digitalInput(p7),//pin
   m370_digitalInput(p8),//pin
-  m370_digitalInput(p13)//pin
+  m370_digitalInput(p9)//pin
 };
 
 void setup() {
@@ -71,17 +51,16 @@ void setup() {
   for(byte i=0;i<NUM_ANALOG;i++) ana[i].begin();
 
   comms.baudRate = 115200;
-  comms.begin(FIRMWARE);
+  comms.begin();
   
   byte commsBegin = 0;
   while(commsBegin  ==  0){
     if(SERIAL_DEBUG == 1) break;
     //Serial.println("comms");
-    commsBegin = comms.connect()  ; //sends firmware metadata to begin function
+    commsBegin = comms.connect()  ;
   }
   delay(100);
- Serial.println("comm mode " + String(commsBegin));
- Serial.println("setup completed"); 
+  Serial.println("setup completed"); 
 }// setup
 
 void loop() {
