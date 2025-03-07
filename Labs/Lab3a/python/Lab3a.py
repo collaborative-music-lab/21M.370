@@ -35,7 +35,8 @@ def mapSensor(add, val):
 
     #buttons
     if add == "/sw0": 
-        pass
+        if val == 1:
+            sendOSC("manual", 0)
     elif add == "/sw1": 
         pass
     elif add == "/sw2": 
@@ -46,6 +47,7 @@ def mapSensor(add, val):
     #pots
     if add == "/pot0":
         hits = int(val/510)
+        sendOSC("decay", 1, "D", scale(val,0,4095,5,100) )
         if hits != euclidHits:
             euclidHits = hits
             euclidPattern = euclid( euclidHits, euclidBeats, euclidRotate)
@@ -120,6 +122,12 @@ def sendOSC(module, instance, param=0, val=0):
     setup.client.send_message('/module', module)
     msg = [param, val, instance]
     setup.client.send_message('/param', msg)
+
+def scale(inVal, inlow=0, inhigh=4095, outlow=0, outhigh=127, curve = 1):
+    inVal = (inVal-inlow)/(inhigh-inlow)
+    inVal = pow(inVal, curve)
+    output = inVal*(outhigh-outlow) + outlow
+    return output
 
 #####################
 # Start the system, passing in `mapSensor` and `define_osc_handlers`
