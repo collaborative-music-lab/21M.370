@@ -68,40 +68,56 @@ class serialClass:
             #     print(port + " not available\n") 
 
     def checkPorts(self, port, baudrate, connected): 
-        """Check a serial port to see if there  is an ESP32 connected."""
+        """Check a serial port to see if there is an ESP32 connected."""
         serial_connected = connected
-        if connected == 1: return serial_connected
+        if connected == 1:
+            return serial_connected
 
         print("Looking for ESP32 on " + port)
         try: 
-            self.comm = serial.Serial(port, baudrate, timeout=0)
- 
-        #setserial curSerialPort low_latency #https://stackoverflow.com/questions/13126138/low-latency-serial-communication-on-linux
-            self.comm.setDTR(False) # Drop DTR
-            time.sleep(0.022)    # Read somewhere that 22ms is what the UI does.
-            self.comm.setDTR(True)  # UP the DTR back
-            time.sleep(0.5)
-            self.comm.read(self.comm.in_waiting)
-            print(port,baudrate,serial_connected)
-            for i in range(10):
-                self.comm.write([253,1,1,255])
-                response = self.comm.read(self.comm.in_waiting) 
-                print(response)
-                if len(response) > 0: 
-                    print(response)
-                    serial_connected = 1 
-                if serial_connected == 1:  
-                    print(port + " connected\n")
-                    break;
-                self.comm.close
-                time.sleep(0.1)
-        except serial.SerialException as e:
-            print (e)
-            pass
-        if serial_connected == 1:  return serial_connected
-        print(port + " not available\n")
-        return  serial_connected
+            #self.comm = serial.Serial(port, baudrate, timeout=0.1)  # Use small blocking timeout
 
+            self.comm = serial.Serial(port, baudrate, timeout=0.1, rtscts=False, dsrdtr=False)
+            time.sleep(0.05)  # let it settle
+            self.comm.setRTS(True)
+            self.comm.setDTR(False)
+            time.sleep(0.1)  # keep reset low
+            self.comm.setRTS(False)
+            self.comm.setDTR(True)
+            time.sleep(0.5)  # Wait for ESP32 to boot up and be ready
+
+            self.comm.reset_input_buffer()  # Clear out garbage
+
+            print(port, baudrate, serial_connected)
+
+            for i in range(10):
+                print(f"Attempt {i+1}: Sending handshake packet")
+                self.comm.write([253, 1, 1, 255])  # Example command; adjust if needed
+                time.sleep(0.05)  # Wait for response (adjust based on ESP32 code)
+
+                bytes_waiting = self.comm.in_waiting
+                print(f"Bytes waiting: {bytes_waiting}")
+
+                if bytes_waiting > 0:
+                    response = self.comm.read(bytes_waiting)
+                    print(f"Received: {response}")
+                    if len(response) > 0: 
+                        serial_connected = 1 
+                        print(port + " connected\n")
+                        break  # Exit loop when connected
+
+                time.sleep(0.1)  # Small pause before retrying
+
+            if serial_connected != 1: self.comm.close()  # Correctly close the port when done
+
+        except serial.SerialException as e:
+            print(f"Serial exception on {port}: {e}")
+
+        if serial_connected == 1:
+            return serial_connected
+
+        print(port + " not available\n")
+        return serial_connected
 
     def available(self):
         escFlag = 0
@@ -111,7 +127,7 @@ class serialClass:
 
         while self.comm.in_waiting > 0:
             val = int.from_bytes(self.comm.read(), "big" )
-            #print(val)
+
             if escFlag == 1:
                 self.inputBuffer.append(val)
                 escFlag = 0
