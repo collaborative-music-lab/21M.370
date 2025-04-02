@@ -34,10 +34,25 @@ class serialClass:
 
         #check if cur port is available 
         if defaultport != None: 
-            serial_connected = self.checkPorts(defaultport, baudrate, serial_connected)
-            
-        for port in ports:   
             serial_connected = self.checkPorts( port, baudrate, serial_connected )
+            
+            # self.comm = serial.Serial(port, baudrate, timeout=0.1, rtscts=False, dsrdtr=False)
+            # time.sleep(0.05)  # let it settle
+            # self.comm.setRTS(True)
+            # self.comm.setDTR(False)
+            # time.sleep(0.1)  # keep reset low
+            # self.comm.setRTS(False)
+            # self.comm.setDTR(True)
+            # time.sleep(0.5)  # Wait for ESP32 to boot up and be ready
+
+            # self.comm.reset_input_buffer()  # Clear out garbage
+
+            # print('default', port, baudrate, serial_connected)
+            # return 
+
+        for port in ports:   
+            serial_connected = 1
+            self.checkPorts( port, baudrate, serial_connected )
             #
             # if defaultport in ports: port = defaultport
 
@@ -77,16 +92,19 @@ class serialClass:
         try: 
             #self.comm = serial.Serial(port, baudrate, timeout=0.1)  # Use small blocking timeout
 
-            self.comm = serial.Serial(port, baudrate, timeout=0.1, rtscts=False, dsrdtr=False)
-            time.sleep(0.05)  # let it settle
-            self.comm.setRTS(True)
-            self.comm.setDTR(False)
-            time.sleep(0.1)  # keep reset low
-            self.comm.setRTS(False)
-            self.comm.setDTR(True)
-            time.sleep(0.5)  # Wait for ESP32 to boot up and be ready
+            self.comm = serial.Serial(port, baudrate, timeout=0.5)
 
-            self.comm.reset_input_buffer()  # Clear out garbage
+            # RTS/DTR toggle to boot ESP32 into run mode (not flash mode)
+            self.comm.setDTR(False)
+            self.comm.setRTS(True)
+            time.sleep(0.1)
+            self.comm.setDTR(True)
+            self.comm.setRTS(False)
+            time.sleep(2.0)
+
+            self.comm.reset_input_buffer()
+            print("Reading boot messages:")
+            print(self.comm.read(100).decode(errors="ignore"))
 
             print(port, baudrate, serial_connected)
 
