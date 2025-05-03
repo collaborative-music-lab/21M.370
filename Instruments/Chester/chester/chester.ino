@@ -8,25 +8,25 @@
  byte IMU_DEBUG = 0;
 
 // WiFi network name and password:
-const char * ssid = "Solaris"; //2.4GHz network only (no 5g)
-const char * password = "grapes24"; //leave blank for AP mode (e.g. password = ""; )
+const char * ssid = "p"; //2.4GHz network only (no 5g)
+const char * password = "p"; //leave blank for AP mode (e.g. password = ""; )
 const char * port = "1236"; //leave blank for AP mode (e.g. password = ""; )
 //port must be 4 digits!
 
 ////Firmware metadata
 String FIRMWARE[] = {
   /*NAME*/ "chester",
-  /*VERSION*/ "0.1",
+  /*VERSION*/ "0.2",
   /*AUTHOR*/ "Ian Hattwick",
-  /*DATE*/ "Apr 18, 2022",
-  /*NOTES*/ "WiFi setup"
+  /*DATE*/ "Apr 15, 2025",
+  /*NOTES*/ "Serial Only"
 };
 
 
 ////For wifi, AP mode creates a network and STA mode joins a network
 //available comModes are: SERIAL_ONLY, AP_WIFI, STA_WIFI, APandSERIAL, STAandSERIAL;
 //set default comMode here:
-const comModes comMode = STAandSERIAL;
+const comModes comMode = SERIAL_ONLY;
 m370_communication comms(comMode);
 
 /*********************************************
@@ -41,25 +41,42 @@ ENCODERS SETUP
 // - divider: many encoders put out multiple pulses per detent
 //   The divider helps to make encoder increments match detents
 
-Esp32Encoder enc(p13,p12,p10,4);//A,B,Switch, Divider
+Esp32Encoder enc(p10,p11,p13,1);//A,B,Switch, Divider
 
+/*********************************************
+ANALOG SETUP
+*********************************************/
+const byte NUM_ANALOG = 4;
+
+m370_analog ana[6] = {
+  m370_analog(p0,20), //pin, sampling rate (Hz) F = 1/T, T = 1/F
+  m370_analog(p1,20),  //pin, sampling rate (Hz)
+  m370_analog(p2,20), //pin, sampling rate (Hz)
+  m370_analog(p3,20),  //pin, sampling rate (Hz)
+  m370_analog(p4,20), //pin, sampling rate (Hz)
+  m370_analog(p5,20)  //pin, sampling rate (Hz)
+};
 
 /*********************************************
 DIGITAL INPUT SETUP
 *********************************************/
 const byte NUM_DIGITAL = 4;
 
-m370_digitalInput sw[NUM_DIGITAL] = {
+m370_digitalInput sw[8] = {
   m370_digitalInput(p6,500),//pin, rate(Hz)
   m370_digitalInput(p7,500),//pin, rate(Hz)
   m370_digitalInput(p8,500),//pin, rate(Hz)
-  m370_digitalInput(p9,500)//pin, rate(Hz)
+  m370_digitalInput(p9,500),//pin, rate(Hz)
+  m370_digitalInput(p10,500),//pin, rate(Hz)
+  m370_digitalInput(p11,500),//pin, rate(Hz)
+  m370_digitalInput(p12,500),//pin, rate(Hz)
+  m370_digitalInput(p13,500)//pin, rate(Hz)
 };
 
 
 void setup() {
  
-  comms.baudRate = 115200;
+  comms.baudRate = 460800;
   comms.begin(FIRMWARE);
   
   byte commsBegin = 0;
@@ -74,14 +91,16 @@ void setup() {
 
   //initialize inputs
   for( int i=0;i<NUM_DIGITAL;i++) sw[i].begin();
+  for(byte i=0;i<NUM_ANALOG;i++) ana[i].begin();
   enc.begin([]{enc.readEncoder_ISR();});
-  imuSetup();
+    imuSetup();
 
   Serial.println("Setup complete");
 }
 
 void loop() {
   readSw();
+  readAnalog();
   readEncoder();
   imuLoop();
 
@@ -107,6 +126,23 @@ void readSw(){
       }
       else {
         comms.outu8(i+10);
+        comms.outu16(outVal);
+        comms.send();
+      }
+    }
+  }
+}
+
+void readAnalog(){
+  for(int i=0;i<NUM_ANALOG;i++){
+    ana[i].loop();
+    if(ana[i].available() ){
+      int outVal = ana[i].getVal();
+      if( SERIAL_DEBUG ) {
+        PrintDebug("analog",i,outVal);
+      }
+      else {
+        comms.outu8(i);
         comms.outu16(outVal);
         comms.send();
       }

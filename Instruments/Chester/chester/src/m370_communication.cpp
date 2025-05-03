@@ -439,7 +439,7 @@ void m370_communication::pack(byte val){
 void WiFiEvent(WiFiEvent_t event){
 
   switch(event) {
-    case SYSTEM_EVENT_STA_GOT_IP:
+    case IP_EVENT_STA_GOT_IP:
         //When connected set 
         Serial.print("WiFi connected! IP address: ");
         espAddress = WiFi.localIP(); 
@@ -450,12 +450,12 @@ void WiFiEvent(WiFiEvent_t event){
         udp.begin(WiFi.localIP(),udpPort);
         serverFound=1;
         break;
-    case SYSTEM_EVENT_STA_DISCONNECTED:
+    case WIFI_EVENT_STA_DISCONNECTED:
         //Serial.println("WiFi lost connection");
         serverFound = 0;
         //m370_wifiConnectionState = 1;
         break;
-    case SYSTEM_EVENT_AP_STACONNECTED:
+    case WIFI_EVENT_AP_STACONNECTED:
         Serial.print("New device connected "  );
         serverFound = 1;
         //m370_wifiConnectionState = 1;

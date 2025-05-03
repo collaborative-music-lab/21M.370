@@ -28,6 +28,7 @@
 #include "pinDefsv5.h"
 #include "src/m370_communication.h"
 #include "src/m370_digitalInput.h"
+#include "src/m370_analog.h"
 #include "src/LSM6.h"
 #include "src/Esp32Encoder.h"
 

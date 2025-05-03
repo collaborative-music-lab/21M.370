@@ -57,7 +57,7 @@ void imuLoop(){
       Serial.print(imu.g.z);
       Serial.println(" ");
     }
-    else{
+    else if(!SERIAL_DEBUG){
       comms.outu8(71);
       comms.out16(accel[0]/count);
       comms.out16(accel[1]/count);

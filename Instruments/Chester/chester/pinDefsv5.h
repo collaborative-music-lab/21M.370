@@ -5,7 +5,7 @@
 
  // array of ESPpins
 const byte espPin[] = {32,36,39,35,33,34, //analog inputs
-  13,14,25,26,27,0,15,4, //digital inputs
+  13,14,25,26,4,15,0,27, //digital inputs
   19,23,18,2,12, //SPI
   21,22, //I2C
   16,17, //UART 2
@@ -26,10 +26,10 @@ const byte p7 = 14;
 const byte p8 = 25;
 const byte p9 = 26;
 
-const byte p10 = 27;
-const byte p11 = 0;
-const byte p12 = 15;
-const byte p13 = 4;
+const byte p10 = 4;
+const byte p11 = 15;
+const byte p12 = 0;
+const byte p13 = 27;
 
 //MUX and SPI control pins
 const byte pMISO = 19;
