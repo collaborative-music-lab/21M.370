@@ -7,7 +7,7 @@ Main script handling mappings.
 Setup variables for configuring communicaton with ESP32
 and OSC are in setup.py
 """
-MONITOR_SENSORS = 0
+MONITOR_SENSORS = 1
 enableIMUmonitoring = 1
 
 import setup  # Import setup module
@@ -17,21 +17,20 @@ import math
 ######################
 # SERIAL SETUP
 ######################
-import threading
-import simpleSerial
+# import threading
+# import simpleSerial
 
-def run_serial_thread():
-    simpleSerial.main()
+# def run_serial_thread():
+#     simpleSerial.main()
 
-# Create and start the serial reading thread.
-serial_thread = threading.Thread(target=run_serial_thread, daemon=True)
-serial_thread.start()
+# # Create and start the serial reading thread.
+# serial_thread = threading.Thread(target=run_serial_thread, daemon=True)
+# serial_thread.start()
 
 ######################
 # GLOBAL VARIABLES
 ######################
 state = {
-
     #raw data
     'accel': [0,0,0],
     'velocity': [0,0,0], #accel integration
@@ -41,6 +40,9 @@ state = {
 
     'gyro': [0,0,0],
     'angle': [0,0,0], #gyro integration
+
+    'encoder': 0,
+    'photocell':0,
 
     #buffers for data
     'accelIndex': 0,
@@ -72,16 +74,28 @@ tuning = {
     'magnitudeGain': 4,
     'tiltSmooth': 0.9,
     'velocitySmooth': 1,
+    'photoSmooth': .5,
 }
 
-def mapSensor(add, val):
-    global state
-    #print(add,val)
-    #return
+def mapSensor(device, add, val):
+    global state, MONITOR_SENSORS
+    if MONITOR_SENSORS == 1:
+        print(device, add,val)
+    
     sensor,num = splitAddress(add)
 
-    if sensor == "/pot":
-        pass
+    if sensor == "/analog":
+        if num == 0:
+            val = val/4095
+            a = tuning['photoSmooth']
+            val = val*(1-a) + state['photocell']*a
+            setup.client.send_message("/dataY", val)
+            state['photocell'] = val
+            print(state['photocell'])
+
+        if num == 2:
+            setup.client.send_message("/dataZ", scale(val,1000,3000,-1,1))
+        
 
     elif sensor == "/sw":
         pass
@@ -90,11 +104,15 @@ def mapSensor(add, val):
         pass
 
     elif sensor == "/enc":
-        pass
+        state['encoder'] = state['encoder'] + val
+        setup.client.send_message("/dataX", state['encoder']/127)
 
-    elif sensor == "/encSw":
+    elif     sensor == "/encSw":
+        print(add,val)
         pass
     elif sensor == "/acc":
+        if enableIMUmonitoring:
+            print(add,val)
         state['jerk'] = calcJerk(val)
         state['velocity'] = calcVelocity(val)
         state['magnitude'] = calcMagnitude(val)
@@ -109,6 +127,8 @@ def mapSensor(add, val):
         sendRawAccel( val)
 
     elif sensor == "/gyro":
+        if enableIMUmonitoring:
+            print(add,val)
         state['angle'] = calcAngle(val)
         state['tilt'] = calcTilt(val)
         sendRawGyro( val)
