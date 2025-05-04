@@ -33,7 +33,7 @@ class MyServerCallbacks : public BLEServerCallbacks {
     conn_params.timeout = 200;  // 200 * 10ms = 2s supervision timeout
 
     esp_ble_gap_update_conn_params(&conn_params);
-    led.set(1000,5);
+    led.set(4000,2);
   };
 
   void onDisconnect(BLEServer *pServer) {
@@ -42,7 +42,7 @@ class MyServerCallbacks : public BLEServerCallbacks {
 
     delay(500);  // Optional: let BLE stack settle before restart
     pServer->getAdvertising()->start();
-    led.set(100,50);
+    led.set(200,30);
   }
 };
 
@@ -251,6 +251,8 @@ void m370_communication::stopBLE() {
   uint16_t m370_communication::send() {
     if (outIndex < 1) return 0;
     int sentBytes = -1;
+
+    if(deviceConnected == false) return -1;
     
     if (bleCharacteristic != nullptr) {
       bleCharacteristic->setValue(outBuffer, outIndex);

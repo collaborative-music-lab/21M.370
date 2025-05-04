@@ -24,7 +24,6 @@ M5LCD lcd;
  byte IMU_DEBUG = 0;
  byte IS_ACTIVE = 1;
  int imu_interval = 50;
- byte ledInterval = 0;
 
 m370_communication comms;
 
@@ -32,6 +31,7 @@ I2C_MPU6886 imu(I2C_MPU6886_DEFAULT_ADDRESS, Wire1);
 
 LedBlinker led = {10, 500, 50}; 
 
+//SETUP
 void setup() {
   Wire1.begin(21, 22);
   Serial.begin(115200);
@@ -62,51 +62,19 @@ void setup() {
   
 }
 
-byte BTConnected = 0;
+//LOOP
 void loop() {
   
-  ButtonState a = btnA.update();
-  ButtonState b = btnB.update();
-  
-  if (a == PRESSED) {
-    Serial.println("A pressed");
-    IS_ACTIVE = IS_ACTIVE == 0 ? 1 : 0;
-    if(IS_ACTIVE) {
-      lcd.fill(COLOR_GREEN);
-      lcd.font_scale = 4;
-      lcd.drawText(10, 10, String(DEVICE_NUM).c_str(), M5LCD::rgb(255, 255, 255));
-      //comms.startBLE();  // reinit BLE with new name
-      led.set(1000,10);
-    }
-    else {
-      lcd.fill(COLOR_RED);
-      lcd.font_scale = 4;
-      lcd.drawText(10, 10, "OFF", M5LCD::rgb(255, 255, 255));
-      led.set(500,50);
-    }
-  }
-  if (a == RELEASED) Serial.println("A released");
-
-  if (b == PRESSED) {
-    Serial.print("B presse, Device num:");
-    DEVICE_NUM = (DEVICE_NUM % 10) + 1;
-    Serial.println(DEVICE_NUM);
-
-    saveDeviceNumberToEEPROM(DEVICE_NUM);
-   //comms.startBLE();
-
-    lcd.font_scale = 4;
-    lcd.drawText(10, 10, String(DEVICE_NUM).c_str(), M5LCD::rgb(255, 255, 255));
-  }
-
   //if( !IS_ACTIVE ) return;
   readIMU();
   led.update();
+  readButtons();
 
   //updateDisplay();
   monitorBattery();
+}//loop
 
-}
+//READ FUNCTIONS
 
 uint16_t readIMU(){
   uint32_t timer = 0;
@@ -141,6 +109,45 @@ uint16_t readIMU(){
   }
   return sentBytes;
 }
+
+uint16_t readButtons(){
+  ButtonState a = btnA.update();
+  ButtonState b = btnB.update();
+  uint16_t sentBytes = 0;
+  
+  if (a == PRESSED) {
+    Serial.println("A pressed");
+    comms.outu8(10);
+    comms.outu8(1);
+    comms.end();
+    sentBytes = comms.send();
+  }
+  if (a == RELEASED) {
+    Serial.println("A released");
+    comms.outu8(10);
+    comms.outu8(0);
+    comms.end();
+    sentBytes = comms.send();
+  }
+
+  if (b == PRESSED) {
+    Serial.println("B pressed");
+    comms.outu8(11);
+    comms.outu8(1);
+    comms.end();
+    sentBytes = comms.send();
+  }
+  if (b == RELEASED) {
+    Serial.println("B released");
+    comms.outu8(11);
+    comms.outu8(0);
+    comms.end();
+    sentBytes = comms.send();
+  }
+  return sentBytes;
+}
+
+
 
 void updateDisplay(){
   static byte x = 0;

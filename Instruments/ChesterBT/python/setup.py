@@ -81,32 +81,23 @@ async def process_serial(map_sensor_function):
 
     try:
         while not shutdown_event.is_set() and t.check():
-            # Yield control to allow other coroutines to run.
-            await asyncio.sleep(0)
-            
-            # Try to obtain a message from the queue with a short timeout.
             try:
-                current_message = await asyncio.wait_for(udp_queue.get(), timeout=0.001)
-            except asyncio.TimeoutError:
+                current_message = udp_queue.get_nowait()
+            except asyncio.QueueEmpty:
                 current_message = None
-            
+
             if current_message:
-                # Process the message according to your logic.
-                #print(list(current_message))
                 if PACKET_INCOMING_SERIAL_MONITOR == 0:
-                    # If the message is of the expected length, process it.
                     if 2 < len(current_message) < 128:
-                        #print(list(current_message))
-                        
                         device, address, value = sensor.processInput(current_message)
-                        #print(address,value)
                         map_sensor_function(device, address, value)
                         client.send_message(address, value)
                 else:
                     print("Packet:", current_message)
-            
-            # A brief pause helps prevent busy looping.
-            await asyncio.sleep(0.001)
+
+            # Yield control only if idle
+            await asyncio.sleep(0)  # yields control, doesn't delay
+
     except asyncio.CancelledError:
         print("UDP processing stopped.")
     finally:

@@ -1,13 +1,17 @@
  /* Simple test for analog and digital inputs, and digital outputs
  * 
  */
+const char* DEVICE_NAME = "ESP";
 #include "m370_lbr.h"
+#include "led.h"
 #include "BLE.h"
 
  byte SERIAL_DEBUG = 0;
  byte IMU_DEBUG = 0;
 
 m370_communication comms;
+
+LedBlinker led = {2, 500, 50}; //built-in led
 
 /*********************************************
 ENCODERS SETUP 
@@ -57,44 +61,31 @@ m370_digitalInput sw[8] = {
 void setup() {
   Serial.begin(115200);
   BLE_setup() ;
-  comms.setCharacteristic(pCharacteristic);
   //comms.begin();
+  pinMode(22, OUTPUT);
   
   delay(100);
+
+  led.begin();
+  comms.startBLE();
 
   //initialize inputs
   for( int i=0;i<NUM_DIGITAL;i++) sw[i].begin();
   for(byte i=0;i<NUM_ANALOG;i++) ana[i].begin();
   //enc.begin([]{enc.readEncoder_ISR();});
-  //imuSetup();
+  imuSetup();
 
   Serial.println("Setup complete");
 }
 
-byte BTConnected = 1;
 void loop() {
   
-  if(BTConnected == 0){
-    //BTConnected = comms.bluetooth_loop();
-    Serial.print("bt ");
-    Serial.println((BTConnected));
-  }
-
+  
+  led.update();
   readSw();
   readAnalog();
   //readEncoder();
-  //imuLoop();
-
-  //Serial.println("loop");
-  delay(10);
-
-  
-  if (comms.available()){
-    byte inBuffer[64];
-    byte index=0;
-
-    comms.getInput(inBuffer,  &index);
-  }
+  imuLoop();
 }
 
 void readSw(){
@@ -126,7 +117,7 @@ void readAnalog(){
         PrintDebug("analog",i,outVal);
       }
       else {
-        PrintDebug("analog",i,outVal);
+        //PrintDebug("analog",i,outVal);
         comms.outu8(i);
         comms.outu16(outVal);
         comms.end();

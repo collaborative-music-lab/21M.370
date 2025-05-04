@@ -8,7 +8,7 @@ Setup variables for configuring communicaton with ESP32
 and OSC are in setup.py
 """
 MONITOR_SENSORS = 1
-enableIMUmonitoring = 1
+enableIMUmonitoring = 0
 
 import setup  # Import setup module
 import asyncio
@@ -79,23 +79,13 @@ tuning = {
 
 def mapSensor(device, add, val):
     global state, MONITOR_SENSORS
-    if MONITOR_SENSORS == 1:
-        print(device, add,val)
     
     sensor,num = splitAddress(add)
+    if MONITOR_SENSORS == 1 and add not in ['/acc0', '/gyro0']:
+        print('MONITOR_SENSORS', device, add, val)
 
     if sensor == "/analog":
-        if num == 0:
-            val = val/4095
-            a = tuning['photoSmooth']
-            val = val*(1-a) + state['photocell']*a
-            setup.client.send_message("/dataY", val)
-            state['photocell'] = val
-            print(state['photocell'])
-
-        if num == 2:
-            setup.client.send_message("/dataZ", scale(val,1000,3000,-1,1))
-        
+        pass
 
     elif sensor == "/sw":
         pass
@@ -104,15 +94,13 @@ def mapSensor(device, add, val):
         pass
 
     elif sensor == "/enc":
-        state['encoder'] = state['encoder'] + val
-        setup.client.send_message("/dataX", state['encoder']/127)
-
+        pass
     elif     sensor == "/encSw":
         print(add,val)
         pass
     elif sensor == "/acc":
         if enableIMUmonitoring:
-            print(add,val)
+            print(device, add,val)
         state['jerk'] = calcJerk(val)
         state['velocity'] = calcVelocity(val)
         state['magnitude'] = calcMagnitude(val)
@@ -128,7 +116,7 @@ def mapSensor(device, add, val):
 
     elif sensor == "/gyro":
         if enableIMUmonitoring:
-            print(add,val)
+            print(device, add,val)
         state['angle'] = calcAngle(val)
         state['tilt'] = calcTilt(val)
         sendRawGyro( val)
