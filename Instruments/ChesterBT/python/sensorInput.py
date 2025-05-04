@@ -28,12 +28,14 @@ def processInput(*args):
 	# I like to write this out longform in case I need
 	#to change the order of sensors in a group
 	#print(address, val)
-	if address == 0: return(device_name,"/analog0", val)
-	elif address == 1: return(device_name,"/analog1", val)
-	elif address == 2: return(device_name,"/analog2", val)
-	elif address == 3: return(device_name,"/analog3", val)
-	elif address == 4: return(device_name,"/analog4", val)
-	elif address == 5: return(device_name,"/analog5", val)
+	if address < 10:
+		val = bto_ui16(val[0], val[1])
+		if address == 0: return(device_name,"/analog0", val)
+		elif address == 1: return(device_name,"/analog1", val)
+		elif address == 2: return(device_name,"/analog2", val)
+		elif address == 3: return(device_name,"/analog3", val)
+		elif address == 4: return(device_name,"/analog4", val)
+		elif address == 5: return(device_name,"/analog5", val)
 	
 	elif 10 <= address <= 18:
 		#buttons

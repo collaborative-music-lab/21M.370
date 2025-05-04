@@ -79,8 +79,6 @@ void setup() {
 }
 
 void loop() {
-  
-  
   led.update();
   readSw();
   readAnalog();

@@ -7,7 +7,7 @@ Main script handling mappings.
 Setup variables for configuring communicaton with ESP32
 and OSC are in setup.py
 """
-MONITOR_SENSORS = 1
+MONITOR_SENSORS = 0
 enableIMUmonitoring = 0
 
 import setup  # Import setup module
@@ -85,6 +85,8 @@ def mapSensor(device, add, val):
         print('MONITOR_SENSORS', device, add, val)
 
     if sensor == "/analog":
+        if device == "ESP-015C":
+            print(val)
         pass
 
     elif sensor == "/sw":
