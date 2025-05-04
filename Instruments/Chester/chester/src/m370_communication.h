@@ -12,29 +12,13 @@ m370_communication
 #ifndef M370COMMUNICATION_h
 #define M370COMMUNICATION_h
 #include "Arduino.h"
-#include <WiFi.h>
-#include <WiFiUdp.h>
-
-//#include "src/SparkFunLSM6DS3.h"
-//#include "src/Adafruit_MPR121.h"
-//#include "src/NewPing.h"
-//#include "src/Adafruit_MCP4728.h"
-//#include <slip.h>
-
-// void  debug(String name, int val);
-// void  debug2(String name, int val1, int  val2);
-// void  debug3(String name, int val1, int val2,  int val3);
 
 /************************
 **Communication setup
 ************************/
-//for AP mode: https://randomnerdtutorials.com/esp32-access-point-ap-web-server/
-
-
 
 //For wifi, AP mode creates a network and STA mode joins a network
 enum comModes{SERIAL_ONLY, AP_WIFI, STA_WIFI, APandSERIAL, STAandSERIAL};
-void WiFiEvent(WiFiEvent_t event);
 
 /************************
 **Communication class
@@ -49,7 +33,6 @@ class m370_communication{
 
 	uint8_t begin( String firmwareNotes[5]); //returns success or failure
 	uint8_t connect(); //returns 1=serial, 2=wifi, 3=bluetooth
-	void setIP(byte base[]);
 
 	//uint16_t checkInput();
 	uint16_t available();
@@ -76,11 +59,6 @@ class m370_communication{
 	byte WIFI_ENABLE = 0; //enables communication over WIFI
 	byte ACTIVE_MODE = 0; //1=serial,2=wifi, 3=blutooth
 	byte BLUETOOTH_ENABLE = 0;
-
-	//standard wifi settins
-	int localport = 8002;
-	int udpPort2 = 1238;
-	int serverPort = 1235;
 	
 
 	byte handshakeAck = 0;
@@ -109,8 +87,6 @@ class m370_communication{
 
 	uint16_t _available = 0;
 
-	uint8_t wifi_ap_setup();
-	uint8_t wifi_sta_setup();
 	uint8_t serial_setup();
 
   

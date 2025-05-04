@@ -7,11 +7,6 @@
  byte SERIAL_DEBUG = 0;
  byte IMU_DEBUG = 0;
 
-// WiFi network name and password:
-const char * ssid = "p"; //2.4GHz network only (no 5g)
-const char * password = "p"; //leave blank for AP mode (e.g. password = ""; )
-const char * port = "1236"; //leave blank for AP mode (e.g. password = ""; )
-//port must be 4 digits!
 
 ////Firmware metadata
 String FIRMWARE[] = {
@@ -23,9 +18,7 @@ String FIRMWARE[] = {
 };
 
 
-////For wifi, AP mode creates a network and STA mode joins a network
-//available comModes are: SERIAL_ONLY, AP_WIFI, STA_WIFI, APandSERIAL, STAandSERIAL;
-//set default comMode here:
+//set comMode to SERIAL_ONLY here:
 const comModes comMode = SERIAL_ONLY;
 m370_communication comms(comMode);
 
@@ -92,8 +85,8 @@ void setup() {
   //initialize inputs
   for( int i=0;i<NUM_DIGITAL;i++) sw[i].begin();
   for(byte i=0;i<NUM_ANALOG;i++) ana[i].begin();
-  enc.begin([]{enc.readEncoder_ISR();});
-    imuSetup();
+  //enc.begin([]{enc.readEncoder_ISR();});
+  //imuSetup();
 
   Serial.println("Setup complete");
 }
@@ -101,8 +94,8 @@ void setup() {
 void loop() {
   readSw();
   readAnalog();
-  readEncoder();
-  imuLoop();
+  //readEncoder();
+  //imuLoop();
 
   
   if (comms.available()){
