@@ -8,7 +8,7 @@ import time
 BAUD_RATE = 460800                # Serial communication baud rate.
 UDP_IP = "127.0.0.1"            # Destination IP address for UDP packets.
 UDP_PORT = 5010                 # Destination UDP port.
-SELECTED_PORT_INDEX = 3         # Change this index to select a different port.
+SELECTED_PORT_INDEX = 4         # Change this index to select a different port.
 
 # ------------------ UDP Socket ------------------
 udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -40,7 +40,7 @@ class SlipDecoder:
         while self.comm.in_waiting > 0:
             # Read one byte.
             val = int.from_bytes(self.comm.read(), "big")
-            print( val )
+            #print( val )
             if escFlag == 1:
                 self.inputBuffer.append(val)
                 escFlag = 0
@@ -71,7 +71,11 @@ class SlipDecoder:
         return self.packetList.pop(0)
 
 # ------------------ Serial Port Selection ------------------
-def get_serial_port():
+def get_serial_port(args):
+    if len(args) > 0:
+        user_port = int(args[0])
+    else:
+        user_port = -1  #no argument
     ports = list_ports.comports()
     available_ports = [port.device for port in ports]
 
@@ -83,7 +87,15 @@ def get_serial_port():
     for idx, port in enumerate(available_ports):
         print(f"{idx}: {port}")
 
-    if SELECTED_PORT_INDEX < 0 or SELECTED_PORT_INDEX >= len(available_ports):
+    print(user_port)
+    if user_port >= 0:
+        if user_port < 0 or user_port >= len(available_ports):
+            print(f"Serial port argument {user_port} out of range.")
+            sys.exit(1)
+        selected_port = available_ports[user_port]
+        print(f"Selected serial port: {selected_port} (index {user_port})")
+        return selected_port
+    elif SELECTED_PORT_INDEX < 0 or SELECTED_PORT_INDEX >= len(available_ports):
         print(f"Invalid port index {SELECTED_PORT_INDEX}.")
         sys.exit(1)
 
@@ -93,7 +105,8 @@ def get_serial_port():
 
 # ------------------ Main Loop ------------------
 def main():
-    serial_port = get_serial_port()
+    user_port = sys.argv[1:]
+    serial_port = get_serial_port(user_port)
 
     # Initialize the serial connection.
     try:
