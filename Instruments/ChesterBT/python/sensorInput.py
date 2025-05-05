@@ -75,9 +75,9 @@ def processInput(*args):
 	#accelerometer
 	elif address == 71: # and len(args[0][1]) == 6: 
 		try:
-			aX = bto_i16(args[0][1], args[0][2]) / (1<<15)
-			aY = bto_i16(args[0][3], args[0][4]) / (1<<15)
-			aZ = bto_i16(args[0][5], args[0][6]) / (1<<15)
+			aX = bto_i16(val[0], val[1]) / (1<<15)
+			aY = bto_i16(val[2], val[3]) / (1<<15)
+			aZ = bto_i16(val[4], val[5]) / (1<<15)
 			return(device_name,"/acc0", [aX,aY,aZ])
 		except Exception as e: 
 			print(e)
@@ -85,9 +85,9 @@ def processInput(*args):
 	#gyroscope
 	elif address == 72: # and len(args[0][1]) == 6: 
 		try:
-			gX = bto_i16(args[0][1], args[0][2])/ (1<<15)
-			gY = bto_i16(args[0][3], args[0][4])/ (1<<15)
-			gZ = bto_i16(args[0][5], args[0][6])/ (1<<15)
+			gX = bto_i16(val[0], val[1])/ (1<<15)
+			gY = bto_i16(val[2], val[3])/ (1<<15)
+			gZ = bto_i16(val[4], val[5])/ (1<<15)
 			return(device_name,"/gyro0", [gX,gY,gZ])
 		except Exception as e: 
 			print(e)
