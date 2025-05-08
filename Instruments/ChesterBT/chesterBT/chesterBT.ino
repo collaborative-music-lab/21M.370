@@ -100,7 +100,8 @@ void readSw(){
       else {
         comms.outu8(i+10);
         comms.outu16(outVal);
-        comms.send();
+        comms.end();
+comms.send();
       }
     }
   }
@@ -142,7 +143,8 @@ void readEncoder(){
     else{
       comms.outu8(30);
       comms.out16( val );
-      comms.send();
+      comms.end();
+comms.send();
     }
   }
 
@@ -155,7 +157,8 @@ void readEncoder(){
     else{
       comms.outu8(31);
       comms.outu16(1);
-      comms.send();
+      comms.end();
+comms.send();
     }
     break;
 
@@ -168,7 +171,8 @@ void readEncoder(){
     else{
       comms.outu8(31);
       comms.outu16(0);
-      comms.send();
+      comms.end();
+comms.send();
     }
     break;
   }//switch

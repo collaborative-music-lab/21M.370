@@ -86,7 +86,7 @@ void setup() {
   for( int i=0;i<NUM_DIGITAL;i++) sw[i].begin();
   for(byte i=0;i<NUM_ANALOG;i++) ana[i].begin();
   //enc.begin([]{enc.readEncoder_ISR();});
-  //imuSetup();
+  imuSetup();
 
   Serial.println("Setup complete");
 }
@@ -95,7 +95,7 @@ void loop() {
   readSw();
   readAnalog();
   //readEncoder();
-  //imuLoop();
+  imuLoop();
 
   
   if (comms.available()){
