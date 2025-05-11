@@ -1,6 +1,6 @@
 #define AXP2101_ADDR 0x34
 byte DEVICE_NUM = 1;
-const char* DEVICE_NAME = "ESP";
+const char* DEVICE_NAME = "IMH";
 
 #include "led.h"
 #include "I2C_MPU6886.h"
@@ -17,6 +17,7 @@ const char* DEVICE_NAME = "ESP";
 
 Button btnA(37);
 Button btnB(39);
+
 
 M5LCD lcd;
 
@@ -90,6 +91,15 @@ uint16_t readIMU(){
     imu.getGyro(&g[0], &g[1], &g[2]);
     imu.getTemp(&t);
 
+    if(SERIAL_DEBUG){
+      for(int i=0;i<3;i++) {
+        Serial.print((int16_t)(a[i]*1000));
+        Serial.print("\t");
+      }
+      Serial.println();
+      return 3;
+    }
+
     //acc
     comms.outu8(71);
     for(int i=0;i<3;i++) comms.out16((int16_t)(a[i]*1000));
@@ -104,7 +114,7 @@ uint16_t readIMU(){
     // comms.outu8(102);
     // comms.out16((int8_t)(t));
     // comms.end();
-   sentBytes= comms.send();
+    sentBytes= comms.send();
     //Serial.println(comms.send());
   }
   return sentBytes;
