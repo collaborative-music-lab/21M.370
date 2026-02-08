@@ -1,8 +1,10 @@
 #include <Wire.h>
  
 void setup() {
-  //Wire.begin(44,43);
-  Wire.begin(21,22);
+  //Wire.begin(6,5); //for Wand
+  //Wire.begin(43,44); //for Barre, reversed ESP32-s3 TX/RX SDA, 
+  Wire.begin(44,43); //for Robin, ESP32-s3 TX/RX SDA, SCL
+  //Wire.begin(21,22); //for standard ESP32
   Serial.begin(115200);
   Serial.println("\nI2C Scanner");
 }
@@ -37,5 +39,5 @@ void loop() {
   else {
     Serial.println("done\n");
   }
-  delay(100);          
+  delay(500);          
 }
