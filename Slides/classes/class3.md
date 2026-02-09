@@ -81,6 +81,30 @@ Sample signal flow in automatonism
 
 ---
 
+<div class="two-col">
+  <div class="col-text">
+  <strong>Modules:</strong>
+  <ul>
+    <li>In on top, out on bottom</li>
+    <li>Module parameters sliders are white</li>
+    <li>Purple inputs are for control voltage</li>
+    <li>Purple sliders attenuate CV input</li>
+    <li>Red in/out is for sync/trigger</li>
+  </ul>
+</div>
+
+  <div class="col-image">
+	<img src="./images/pd-synth.png" class="medium-img"/>
+  </div>
+</div>
+
+---
+---
+<img src="/images/pd-drums.png"
+     style="width:600px; display:block; margin:0 auto;">
+
+---
+
 
 
 watch some videos
