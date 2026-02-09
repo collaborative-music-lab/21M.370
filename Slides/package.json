@@ -1,0 +1,16 @@
+{
+  "name": "m370",
+  "version": "1.0.0",
+  "description": "Slides for digital instrument design",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "author": "Ian Hattwick",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^7.3.1"
+  }
+}

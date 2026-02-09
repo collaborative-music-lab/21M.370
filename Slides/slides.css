@@ -1,0 +1,144 @@
+/* Put variables on .reveal so they override the theme's :root */
+/*.reveal {
+  --r-background-color: #f9fafb;
+  --r-main-font: "Georgia", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --r-main-color: #1f2937;
+  --r-main-font-size: 34px;
+
+  --r-heading-font: "Georgia", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --r-heading-color: #0f172a;
+  --r-heading-text-transform: none;
+
+  --r-link-color: #7b5cff;
+  --r-link-color-hover: #5a3df0;
+  --r-selection-background-color: #ffe082;
+  --r-selection-color: #111;
+}*/
+
+/* Your “artsy light” extras */
+.reveal {
+  background:
+    radial-gradient(1200px 700px at 120% -10%, rgba(123,92,255,0.08), transparent 50%),
+    radial-gradient(900px 600px at -10% 120%, rgba(255,141,105,0.08), transparent 45%),
+    var(--r-background-color);
+}
+.reveal section img { border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.12); max-height: 70vh; }
+.reveal pre code { background: #fff !important; color: #111827; border-radius: 10px !important; }
+
+.reveal img {
+  max-width: 100%;
+  height: auto;
+}
+.small-img {
+  width: 200px;
+}
+
+.medium-img {
+  width: 400px;
+}
+
+.large-img {
+  width: 700px;
+}
+
+.reveal .slides section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start !important; /* align content to top */
+  align-items: flex-start;  /* optional: left-align text */
+  height: 100%;
+  padding-top: 1em; /* optional: tweak spacing from top */
+  font-size: 2rem;
+}
+
+.flex-left-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.flex-left-right img {
+  max-width: 40%;
+  height: auto;
+}
+
+.flex-left-right .text {
+  flex: 1;
+}
+
+.flex-left-right img {
+  transform: rotate(270deg);
+  writing-mode: horizontal-tb;
+}
+
+/*full screen caption*/
+.caption {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/*half-screen*/
+.two-col {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0rem;
+}
+
+.col-text{
+  text-align: left;
+}
+
+.col-image{
+  text-align: right;
+}
+
+
+/*big text box*/
+.center-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  text-align: center;
+}
+
+.center-box p {
+  font-size: 3rem;
+  line-height: 1.2;
+}
+
+.code-output {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  height: 70vh;
+}
+
+.code-output .code {
+  font-size: 1.2rem;
+  overflow: auto;
+}
+
+.code-output .output {
+  background: rgba(255,255,255,0.05);
+  padding: 1rem;
+  font-size: 1.4rem;
+  overflow: auto;
+}
+
+/*@media print {
+  html, body {
+    background: white !important;
+  }
+
+  .reveal {
+    background: white !important;
+  }
+
+  .reveal section {
+    background: white !important;
+  }
+}*/

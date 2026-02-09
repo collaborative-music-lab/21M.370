@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <!-- Reveal core CSS -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+
+  <!-- Theme -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+
+  <link rel="stylesheet" href="slides.css">
+</head>
+
+<body>
+
+<div class="reveal">
+  <div class="slides">
+    <section
+      id="md-slide"
+      data-separator="^---$"
+      data-separator-vertical="^--$">
+    </section>
+  </div>
+</div>
+
+<div class="reveal">
+  <div class="slides">
+    <section
+      id="md-slide"
+      data-separator="^---$"
+      data-separator-vertical="^--$">
+    </section>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/markdown/markdown.js"></script>
+
+<script>
+  const params = new URLSearchParams(window.location.search)
+  const className = params.get('class')
+
+  console.log('class:', className)
+
+  const section = document.getElementById('md-slide')
+  const mdPath = `/classes/${className}.md`
+
+  console.log('loading:', mdPath, section)
+
+  section.setAttribute('data-markdown', mdPath)
+
+  Reveal.initialize({
+    hash: false,
+    center: false,
+    plugins: [ RevealMarkdown ]
+  })
+</script>
+
+</body>
+</html>

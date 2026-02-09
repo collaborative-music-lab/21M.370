@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>21M.370 Slides</title>
+  <style>
+    body {
+      font-family: system-ui;
+      padding: 2rem;
+    }
+    ul {
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+<h1>21M.370 Slides</h1>
+
+<ul id="class-list"></ul>
+
+<script type="module">
+  // Import all markdown files in /classes
+  const modules = import.meta.glob('/classes/*.md');
+
+  const list = document.getElementById('class-list');
+
+  Object.keys(modules)
+    .sort()
+    .forEach(path => {
+      const name = path
+        .split('/')
+        .pop()
+        .replace('.md', '');
+
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+
+      a.href = `deck.html?class=${name}`;
+      a.textContent = name;
+
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+</script>
+
+</body>
+</html>
