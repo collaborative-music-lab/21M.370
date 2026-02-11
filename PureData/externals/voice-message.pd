@@ -1,0 +1,14 @@
+#N canvas 122 149 450 300 12;
+#X msg 161 95 1 0 \, 0 1 1;
+#X obj 161 117 vline~;
+#X obj 110 72 t \$1 bang;
+#X obj 110 98 sig~;
+#X obj 188 199 outlet~;
+#X obj 113 205 outlet~;
+#X obj 110 51 r \$1;
+#X connect 0 0 1 0;
+#X connect 1 0 4 0;
+#X connect 2 0 3 0;
+#X connect 2 1 0 0;
+#X connect 3 0 5 0;
+#X connect 6 0 2 0;
