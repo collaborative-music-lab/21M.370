@@ -1,5 +1,5 @@
 # 21M.370 Python Scripts
-Note: most of this is deprecated - I encourage installing python and scamp using the (scamp installation guide)[https://scamp.marcevanstein.com/narrative/easy_setup.html], and programming using Thonny.
+Note: most of this is deprecated - I encourage installing python and scamp using the scamp installation guide https://scamp.marcevanstein.com/narrative/easy_setup.html, and programming using Thonny.
 
 ## Deprecated info
 Requirements:
