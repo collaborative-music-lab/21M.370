@@ -1,5 +1,7 @@
 # 21M.370 Python Scripts
+Note: most of this is deprecated - I encourage installing python and scamp using the [scamp installation guide](https://scamp.marcevanstein.com/narrative/easy_setup.html, and programming using Thonny.
 
+## Deprecated info
 Requirements:
 * Python 3.5 or greater (tested on 3.7)
 * The python-osc module: https://pypi.org/project/python-osc/
