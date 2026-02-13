@@ -89,6 +89,11 @@ The formula: ratio = 2^(N/12)
 - 2^(7/12) = 1.498
 - 2^(12/12) = 2.0
 
+what frequency in Hz is middle C?
+A = 440
+C = 9 steps below A
+2^(-9/12) * 440 = ??
+
 ---
 ## MIDI notes
 
@@ -206,9 +211,10 @@ Control messages are only sent when triggered
 **MOST** parameters for automatonism modules can be easily controlled remotely
 
 You target a parameter by:
-* parameter name (CAPITALS)
 * module name (lowercase)
 * module instance number
+* parameter name (CAPITALS)
+
 
 Modules with the same name and instance number receive the same messages!
 
