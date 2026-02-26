@@ -22,23 +22,41 @@
     radial-gradient(900px 600px at -10% 120%, rgba(255,141,105,0.08), transparent 45%),
     var(--r-background-color);
 }
-.reveal section img { border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.12); max-height: 70vh; }
+.reveal section img { border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.12); max-height: 90vh; }
 .reveal pre code { background: #fff !important; color: #111827; border-radius: 10px !important; }
 
 .reveal img {
   max-width: 100%;
   height: auto;
 }
+
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+}
 .small-img {
   width: 200px;
+  display: block;
+  margin: 0 auto;
 }
 
 .medium-img {
   width: 400px;
+  display: block;
+  margin: 0 auto;
 }
 
 .large-img {
   width: 700px;
+  display: block;
+  margin: 0 auto;
+}
+
+img {
+  width: 100vw;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .reveal .slides section {
