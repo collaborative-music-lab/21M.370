@@ -1,4 +1,4 @@
-#N canvas 0 28 1496 911 10;
+#N canvas 0 178 1496 911 10;
 #X declare -path patch_editor_abs;
 #X obj 18 205 declare -path patch_editor_abs;
 #N canvas 447 23 707 551 patch-editor-do-not-delete 0;
@@ -6187,7 +6187,7 @@
 #X obj 516 372 ladder-filter 1;
 #X obj 522 488 *~, f 26;
 #X obj 346 380 scope;
-#X obj 18 252 OSC-messaging;
+#X obj 18 285 OSC-messaging;
 #X obj 520 144 bwl-osc 1;
 #X obj 729 143 bwl-osc 1;
 #X obj 726 110 +~ 0.002;
@@ -6211,6 +6211,7 @@
 #X obj 519 45 sig~;
 #X msg 941 87 1 0 \, 0 1 1;
 #X obj 941 108 vline~;
+#X obj 16 258 tgl 16 0 empty empty empty 0 -8 0 10 #fcfcfc #000000 #000000 0 1;
 #X connect 11 0 14 0;
 #X connect 11 0 12 0;
 #X connect 12 0 13 0;
@@ -6240,3 +6241,4 @@
 #X connect 37 0 38 0;
 #X connect 38 0 19 0;
 #X connect 38 0 20 0;
+#X connect 39 0 15 0;

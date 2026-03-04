@@ -30,6 +30,11 @@
   height: auto;
 }
 
+h2,
+h3 {
+  text-transform: none !important;
+}
+
 .image-wrapper {
   display: flex;
   justify-content: center;
@@ -150,14 +155,14 @@ img {
 
 
 /* Force Reveal v5 to use a white deck even if the theme is black.css */
-:root {
+/*:root {
   --r-background-color: #fff !important;
   --r-main-color: #000 !important;
   --r-heading-color: #000 !important;
-}
+}*/
 
 /* Belt-and-suspenders (some browsers/theme rules still set backgrounds directly) */
-html, body, .reveal, .reveal .slides, .reveal section {
+/*html, body, .reveal, .reveal .slides, .reveal section {
   background-color: #fff !important;
   color: #000 !important;
-}
+}*/
