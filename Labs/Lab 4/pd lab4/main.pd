@@ -6225,7 +6225,7 @@
 #X obj 999 523 *~ 3;
 #X obj 772 563 *~ 10;
 #X obj 1338 454 hp-filter 1;
-#X obj 405 26 scope;
+#X obj 1470 772 scope;
 #X obj 318 27 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000 #000000 0 1;
 #X obj 318 47 metro 100;
 #X obj 318 68 snapshot~;
@@ -6233,7 +6233,7 @@
 #X obj 767 954 vca 20;
 #X obj 764 1029 *~ 0.2;
 #X obj 957 955 vca 21;
-#X obj 1654 867 vca 26;
+#X obj 1655 867 vca 26;
 #X obj 1337 612 vca 32;
 #X obj 1000 575 vca 31;
 #X obj 777 471 vca 30;
@@ -6259,6 +6259,7 @@
 #X connect 17 0 50 0;
 #X connect 18 0 52 0;
 #X connect 19 0 25 0;
+#X connect 19 0 53 0;
 #X connect 20 0 26 0;
 #X connect 21 0 28 0;
 #X connect 22 0 29 0;
