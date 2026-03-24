@@ -75,3 +75,5 @@ It is possible to generate events by using simple, mathematical formulas.
 * typically the formulas take an input variable *t* which represents the current beat number
 * trigonometric formulas often work well to create repeating patterns with internal structure
 * but obviously there are a lot of other approaches
+
+

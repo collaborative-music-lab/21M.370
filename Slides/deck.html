@@ -38,6 +38,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
 
 <script>
   const params = new URLSearchParams(window.location.search)
@@ -56,8 +57,13 @@
   width: 1100,
   height: 850,
   margin: 0.04,
-  plugins: [ RevealMarkdown ],
+  plugins: [ RevealMarkdown, RevealNotes ],
   hash: false,
+  previewLinks: true,
+  markdown: {
+    smartypants: true, // Turns on the fancy quotes/dashes
+    breaks: true       // Keeps your carriage returns
+  },
     // center: false
 });
 

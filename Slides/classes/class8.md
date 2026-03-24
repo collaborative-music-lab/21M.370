@@ -107,4 +107,55 @@ Springer Handbook of Auditory Research 69, 2019.
 * shaped / constrained randomness
 * what other ideas?
 
+---
+
+## Metaphors
+
+DJs
+* start with source material
+* transforming material
+* think compositionally over time 
+* disconnect between gesture and steady sound
+* do things hidden
+* preparation
+* scratching 
+* timbral control
+* catch and throw
+* responsible for the whole mix
+
+Piano
+* start with a piano score
+* gestural commitment
+* gestual detail
+* not a lot hidden
+* fairly consistent timbre
+
+Electric Gtr
+* gtr, amp, effects pedals
+* delay and time based effects as part of the sound
+
+Production
+* loop based performance
+* mixing as performance
+* production as key element
+* short clips arranged in time
+* visual metaphors
+* humanizing as a conscious act
+
+---
+
+# Options for Nobby
+
+* Find a way to implement rotation
+* Decay time and amplitude for voices
+* change the way that synth sequeces are generated
+
+
+
+
+
+
+
+
+
 
