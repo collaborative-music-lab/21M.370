@@ -185,3 +185,14 @@ Integer clock counters
 Schedulers 
 - sequencers schedule an event in the scheduler 
 - allows for adjustments to scheduled times
+
+---
+
+# Ultra-processed interfaces
+
+who was the talk for?
+- people who but midi controllers to make music
+
+what are the characteristics of ultra-processed instruments
+- make music easier, as a tool
+- 
