@@ -195,4 +195,23 @@ who was the talk for?
 
 what are the characteristics of ultra-processed instruments
 - make music easier, as a tool
-- 
+- separated from culture
+- music is a problem to be solved
+
+how is culture represented in instruments?
+- materials, colors
+- feel of the instrument - for guitar string feel, weight, neck size
+- idiomatic performance
+- what kind of music will be played on it
+- where the instrument is played / what compositions / what context
+- what parts of the performance are visible to collaborators or audience
+- the sound of the instrument
+- the scale of the gestures
+
+idiomatic performance
+- something that is easy / natural / sounds good on an instrument
+- https://youtu.be/fBeQ-O-D3ug
+
+
+
+
