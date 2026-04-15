@@ -204,7 +204,7 @@ what hand gestures are useful with an imu?
 
 
 Challenges
-- velocity? 
+- velocity 
 - slow, hard to segment fast passages 
 - absolute perception, perception in our sense is hard 
 
@@ -283,4 +283,39 @@ Calculation:
 - shake = (mag + shake * leak) 
 - shake = mag + shake - leak
 
+---
 
+# Andrew McPherson
+
+## Sensorimotor skill and cultural factors in digital musical instrument design
+
+9:36 Instrument design is not about the tech, it's about *performers* and *culture*
+
+36:46 Kranzberg: Technology is neither good nor bad, neither is it neutral
+
+[Tom Igoe Physical Computing's Greatest Hits (and misses)](https://courses.ideate.cmu.edu/48-339/f2020/wp-content/uploads/2020/09/igoe_sketching2012.pdf)
+
+---
+
+# Andrew McPherson
+
+
+<div class="image-wrapper">
+<img src="./images/mcpherson-mapping.png" class="large-img"/>
+</div>
+
+
+---
+
+
+# Andrew McPherson
+
+## Sensorimotor skill and cultural factors in digital musical instrument design
+
+How are new technologies being used to make music?
+
+By whom?
+
+For what ends?
+
+Reflecting what values?

@@ -1,0 +1,32 @@
+initial_params  = [
+    ['voice', 0, 'pitch', 48/127],
+    ['voice', 1, 'pitch', 51/127],
+    ['voice', 2, 'pitch', 55/127],
+    ['voice', 3, 'pitch', 58/127],
+    ['voice', 0, 'trigger', 0],
+    ['voice', 1, 'trigger', 0],
+    ['voice', 2, 'trigger', 0],
+    ['voice', 3, 'trigger', 0],
+    ['voice', 0, 'vca', 0],
+    ['voice', 1, 'vca', 0],
+    ['voice', 2, 'vca', 0],
+    ['voice', 3, 'vca', 0],
+    ['voice', 0, 'fm', 0],
+    ['voice', 1, 'fm', 0],
+    ['voice', 2, 'fm', 0],
+    ['voice', 3, 'fm', 0],
+    ['mixer4', 1, 'CH1', 127],
+    ['mixer4', 1, 'CH2', 127*3/4],
+    ['mixer4', 1, 'CH3', 127*1/2],
+    ['mixer4', 1, 'CH4', 127*1/4],
+    ['mixer4', 2, 'CH4', 127],
+    ['mixer4', 2, 'CH3', 127*3/4],
+    ['mixer4', 2, 'CH2', 127*1/2],
+    ['mixer4', 2, 'CH1', 127*1/4],
+    ['bob-filter', 1, 'CUTOFF', 0],
+    ['maestro4', 1, 'CH3', 20],
+    ['maestro4', 1, 'CH4', 20],
+    ]
+
+proximity_pitch = [0,7,10,3]
+touch_pitch = [5,12,15,8]
