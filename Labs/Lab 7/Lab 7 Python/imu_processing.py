@@ -17,25 +17,29 @@ def get_tilt_angles(accel):
     yaw = math.atan2(z, math.sqrt(x*x + y*y)) * 180 / math.pi
     return [pitch, roll, yaw]
 
-current_angle = [0,0,0]
+current_gyro_angle = [0,0,0]
 def get_gyro_angles(gyro):
     """
     Integrates angular velocity to find position.
     Requires knowing how much time has passed (dt).
     """
-    global current_angle
+    global current_gyro_angle
     x, y, z = gyro
     
     dt = 0.01
 
-    angle_x = current_angle[0] + (x * dt)
-    angle_y = current_angle[1] + (y * dt)
-    angle_z = current_angle[2] + (z * dt)
+    angle_x = current_gyro_angle[0] + (x * dt)
+    angle_y = current_gyro_angle[1] + (y * dt)
+    angle_z = current_gyro_angle[2] + (z * dt)
 
     # New Angle = Old Angle + (Speed * Time)
-    current_angle = [angle_x,angle_y,angle_z]
+    current_gyro_angle = [angle_x,angle_y,angle_z]
 
     return [angle_x,angle_y,angle_z]
+
+def reset_gyro_angle():
+    global current_gyro_angle
+    current_gyro_angle = [0,0,0]
 
 def low_pass_filter(new_val, prev_filtered, alpha=0.1):
     """

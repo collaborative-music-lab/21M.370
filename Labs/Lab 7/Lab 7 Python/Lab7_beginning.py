@@ -14,7 +14,7 @@ root = tk.Tk()
 gui = MultiGraph(root)
 
 debug = False # set to True to monitor incoming midi messages
-MONITOR = 'angles' # 'accel', 'gyro', 'magnitude', 'tilt', 'angles'
+MONITOR = 'tilt' # 'accel', 'gyro', 'magnitude', 'tilt', 'angles'
 
 # handlers for incoming midi messages
 # also remember, we are storing them in the active_notes and ccs arrays
@@ -60,7 +60,7 @@ def mainLoop():
     while True:
         # here we can visualize our data
         if MONITOR == 'accel': gui.update(accel_vals)
-        if MONITOR == 'gyro': gui.update(gyro_vals)
+        if MONITOR == 'gyro': gui.update([ gyro_vals[i]+64 for i in range(3)])
         if MONITOR == 'magnitude': gui.update(magnitude)
         if MONITOR == 'tilt': gui.update(tilt)
         if MONITOR == 'angles': gui.update([ angles[i]+64 for i in range(3)])
