@@ -1,3 +1,5 @@
+## https://github.com/collaborative-music-lab/21M.370
+
 # 21M.370 Framework
 
 Repo for MIT course 21M.370 Digital Instrument Design
@@ -29,4 +31,15 @@ This repository will contain all of class examples and lectures. I recommend you
 
 ## Thonny and CircuitPython
 
+
 We will be using CircuitPython on the ESP32, and I recommend you program it using [Thonny](https://thonny.org). Download and install.
+
+
+
+
+Steps to take:
+
+1. Download [PlugData](https://plugdata.org)
+2. Create a GitHub account	
+3. Download and sign into Github Desktop
+4. Clone the 21M.370 Repository)
