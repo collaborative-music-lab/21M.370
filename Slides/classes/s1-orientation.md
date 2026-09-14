@@ -10,6 +10,20 @@ This lecture covers all of the software we will use in the class. By the end of 
 
 ---
 
+# About the course notes
+
+* I am making these slides using markdown, and the markdown files are stored in the class repo:
+* `21M.370/Slides/classes` 
+* Links to any external images or videos will be in the markdown file.
+<br>
+
+* I will also try to remember to make PDF files of the slides and store them in:
+* `21M.370/Slides/_pdf`
+* The course notes will cover in-class micro-lectures, as well as video lectures assignmed to watch out of class.
+	* I'd like to make each set of notes small enough that it is practical to use them as a reference - so if you have a question about a topic you know where to look.
+
+---
+
 # DMI Structure
 
 - **Microcontroller**: A small computer that runs code called firmware (basically the same as software)

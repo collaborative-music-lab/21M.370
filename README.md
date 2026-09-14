@@ -5,6 +5,12 @@ Taught by Ian Hattwick
 - created Spring 2020
 - this branch for Fall 2026
 
+## Course Materials
+
+* [Youtube playlist](https://www.youtube.com/playlist?list=PLYb7FTHRfRB8) for video lectures and tutorials
+* This repository for class notes and lab materials
+* The Canvas site for assignments
+
 # Getting Started
 
 ## PlugData
@@ -24,13 +30,3 @@ This repository will contain all of class examples and lectures. I recommend you
 ## Thonny and CircuitPython
 
 We will be using CircuitPython on the ESP32, and I recommend you program it using [Thonny](https://thonny.org). Download and install.
-
-
-
-
-Steps to take:
-
-1. Download [PlugData](https://plugdata.org)
-2. Create a GitHub account	
-3. Download and sign into Github Desktop
-4. Clone the 21M.370 Repository)
