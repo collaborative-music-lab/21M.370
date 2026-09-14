@@ -1,3 +1,5 @@
+## https://github.com/collaborative-music-lab/21M.370
+
 # 21M.370 Framework
 
 Repo for MIT course 21M.370 Digital Instrument Design
