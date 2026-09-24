@@ -15,128 +15,94 @@
   --r-selection-color: #111;
 }*/
 
-/* Your “artsy light” extras */
+/* Reveal.js Custom Presentation Styles */
+
+/* Background & Global Artsy Lighting */
 .reveal {
   background:
-    radial-gradient(1200px 700px at 120% -10%, rgba(123,92,255,0.08), transparent 50%),
-    radial-gradient(900px 600px at -10% 120%, rgba(255,141,105,0.08), transparent 45%),
+    radial-gradient(1200px 700px at 120% -10%, rgba(123, 92, 255, 0.08), transparent 50%),
+    radial-gradient(900px 600px at -10% 120%, rgba(255, 141, 105, 0.08), transparent 45%),
     var(--r-background-color);
 }
-.reveal section img { border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,.12); max-height: 90vh; }
-.reveal pre code { background: #fff !important; color: #111827; border-radius: 10px !important; }
 
+/* Base Image Behavior (Scoped properly to avoid breaking sized image classes) */
 .reveal img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
 
-h2,
-h3 {
-  text-transform: none !important;
+.reveal section img {
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  max-height: 90vh;
 }
 
+/* Image Size Utility Classes */
 .image-wrapper {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
+
 .small-img {
   width: 200px;
-  display: block;
+  max-width: 100%;
+  height: auto;
   margin: 0 auto;
 }
 
 .medium-img {
   width: 400px;
-  display: block;
+  max-width: 100%;
+  height: auto;
   margin: 0 auto;
 }
 
 .large-img {
   width: 700px;
-  display: block;
-  margin: 0 auto;
-}
-
-img {
-  width: 100vw;
+  max-width: 100%;
   height: auto;
-  display: block;
   margin: 0 auto;
 }
 
+/* Full-bleed background/slide images */
+.full-width-img {
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Typography Overrides */
+.reveal h2,
+.reveal h3 {
+  text-transform: none !important;
+}
+
+/* Slide Layout Alignment */
 .reveal .slides section {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start !important; /* align content to top */
-  align-items: flex-start;  /* optional: left-align text */
+  justify-content: flex-start !important;
+  align-items: flex-start;
   height: 100%;
-  padding-top: 1em; /* optional: tweak spacing from top */
+  padding-top: 1em;
   font-size: 2rem;
+  box-sizing: border-box;
 }
 
-.flex-left-right {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.flex-left-right img {
-  max-width: 40%;
-  height: auto;
-}
-
-.flex-left-right .text {
-  flex: 1;
-}
-
-.flex-left-right img {
-  transform: rotate(270deg);
-  writing-mode: horizontal-tb;
-}
-
-/*full screen caption*/
-.caption {
-  position: absolute;
-  bottom: 2rem;
-  left: 2rem;
-  font-size: 1rem;
-  opacity: 0.8;
-}
-
-/*half-screen*/
-.two-col {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 0rem;
-}
-
-.col-text{
-  text-align: left;
-}
-
-.col-image{
-  text-align: right;
-}
-
-
-/*big text box*/
-.center-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 70vh;
-  text-align: center;
-}
-
-.center-box p {
-  font-size: 3rem;
-  line-height: 1.2;
+/* Code & Output Formatting */
+.reveal pre code {
+  background: #ffffff !important;
+  color: #111827;
+  border-radius: 10px !important;
 }
 
 .code-output {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  width: 100%;
   height: 70vh;
 }
 
@@ -146,10 +112,75 @@ img {
 }
 
 .code-output .output {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   padding: 1rem;
   font-size: 1.4rem;
   overflow: auto;
+  border-radius: 10px;
+}
+
+/* Flex Layout (Image + Text) */
+.flex-left-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.flex-left-right img {
+  max-width: 40%;
+  height: auto;
+  /* Note: Ensure rotation is intended as it shifts standard aspect bounding boxes */
+  transform: rotate(270deg);
+}
+
+.flex-left-right .text {
+  flex: 1;
+}
+
+/* Grid Layout (Two Column) */
+.two-col {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+.col-text {
+  text-align: left;
+}
+
+.col-image {
+  text-align: right;
+}
+
+.col-image img {
+  margin-left: auto;
+}
+
+/* Centered Highlight Box */
+.center-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70vh;
+  text-align: center;
+}
+
+.center-box p {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Fullscreen Slide Captions */
+.caption {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  font-size: 1rem;
+  opacity: 0.8;
 }
 
 
