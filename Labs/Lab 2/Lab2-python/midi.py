@@ -93,6 +93,9 @@ def send_param(name, instance, param, value):
     # Now use the validated parameters
     send_sysex([name, instance, param, value])
     
+def send_message(name, instance=0, param="none", value=0):
+    send_sysex([name, instance, param, value])
+    
 def send_event(name, data):
     # send an arbitrary message over midi sysex. 
     if not isinstance(name, str):

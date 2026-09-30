@@ -79,7 +79,7 @@ while True:
                 val = pot[i].new()
                 if val != False:
                     val = val >> 5 # convert 12 to 7-bit
-
+                    if i == 0: midi.send_message("voice", 0, "cutoff", val)
                     msg.append(val)
                     pot_state[i] = val
 #                 if DEBUG: print(msg)
@@ -96,7 +96,9 @@ while True:
         for i in range(4):
             if button_state[i] == 1:
                 print(index, "button", i)
-
+                midi.send_message("voice", 0, "pitch", 36+i)
+                midi.send_message("voice", 0, "trigger", 0)
+                
 #         midi.send_sysex(0x01, ["basic-osc", 0, 'PITCH', index%127*10+100])
 #         midi.send_note((index)%127,127)
     
