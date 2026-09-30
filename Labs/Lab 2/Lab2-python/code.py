@@ -36,13 +36,26 @@ pixel[0] = (255, 100, 0)
 button_timer = 0
 clock_timer = 0
 bpm = 100
-bpm_seconds = 60/bpm/4
+bpm_seconds = 60/bpm/2
 index = 0
 sensor_timer = 0
 
 button_state = [0,0,0,0]
 pot_state = [0,0,0,0]
 
+# chord variables
+current_chord = [0,2,4]
+scale = [0,2,3,5,7,8,10] # c minor scale
+base_octave = 4
+
+def degreeToMidi(interval):
+    extraOctaves = math.floor( interval / len(scale) )
+    interval = interval % len(scale)
+    note = scale[interval] + (base_octave + extraOctaves) * 12
+    
+    return note
+
+print( degreeToMidi(-3))
 
 while True:
     now = time.monotonic()
@@ -73,18 +86,19 @@ while True:
     
     if now  - clock_timer > bpm_seconds:
         clock_timer = now
-#         index += 1
+        index += 1
+        current_note = current_chord[index % len(current_chord)]
         
-        msg = [index]
+        print( degreeToMidi( current_note) )
+               
         
         #check which button are held
         for i in range(4):
             if button_state[i] == 1:
                 print(index, "button", i)
-        index += 1
-
 
 #         midi.send_sysex(0x01, ["basic-osc", 0, 'PITCH', index%127*10+100])
 #         midi.send_note((index)%127,127)
     
                     
+
