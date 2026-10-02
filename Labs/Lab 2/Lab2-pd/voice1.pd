@@ -1,6 +1,6 @@
 #N canvas 151 178 992 646 12;
 #X obj 176 217 bwl-osc 1;
-#X obj 206 357 bob-filter 1;
+#X obj 176 357 bob-filter 1;
 #X obj 190 487 vca 1;
 #X obj 365 116 VCA 11;
 #X obj 190 566 outlet~;
@@ -36,6 +36,7 @@
 #X connect 12 2 17 0;
 #X connect 12 3 10 0;
 #X connect 12 4 20 0;
+#X connect 13 0 7 0;
 #X connect 13 0 1 1;
 #X connect 14 0 13 0;
 #X connect 15 0 8 0;

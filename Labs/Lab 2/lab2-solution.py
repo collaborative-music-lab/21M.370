@@ -36,7 +36,7 @@ pixel[0] = (255, 100, 0)
 button_timer = 0
 clock_timer = 0
 bpm = 100
-bpm_seconds = 60/bpm/2
+bpm_seconds = 60/bpm/4
 index = 0
 sensor_timer = 0
 
@@ -50,6 +50,10 @@ base_octave = 4
 
 # arpeggio variables
 button_root = [0,3,4,5]
+chord_size = 3 # number of notes in chord
+chord_voicing = 0 # lowest note of chord
+arp_direction = "up"
+newest_button = 0
 
 def degreeToMidi(interval):
     extraOctaves = math.floor( interval / len(scale) )
@@ -58,7 +62,27 @@ def degreeToMidi(interval):
     
     return note
 
-print( degreeToMidi(-3))
+def getDegree(degree, chord):
+    # gets the current chord degree given the chord_voicing and number of notes
+    transpose = math.floor( (degree) / len(chord) )
+    degree = degree % len(chord)
+    note = chord[degree] + transpose * 14
+    
+    return note
+
+def makeChord(root):
+    global current_chord, arp_direction
+    current_chord = []
+    base_chord = [0,2,4,7,9,11]
+    if chord_size > 64: # jazzier voicing for second half of knob
+        base_chord = [0,2,4,6,8,9]
+        
+    # chord_size is bidirectional, in the center is a small arp and +/- increases and changes arp direction
+    arp_direction = "up" if chord_size >= 64 else "down"
+    num_notes = abs((chord_size-64) // 6) + 1
+    for i in range(num_notes):
+        current_chord.append( getDegree( i + chord_voicing, base_chord))
+#     print(current_chord, chord_voicing, num_notes)
 
 while True:
     now = time.monotonic()
@@ -70,6 +94,7 @@ while True:
             if val == "pressed":
                 if DEBUG: print('button ', i, 'pressed')
                 button_state[i] = 1
+                newest_button = i
             elif val == "released":
                 button_state[i] = 0
     
@@ -83,7 +108,17 @@ while True:
                 msg.append(val)
                 if val != False:
                     val = val >> 5 # convert 12 to 7-bit
-                    if i == 0: midi.send_message("voice", 0, "cutoff", val)
+                    if i == 0:
+                        chord_size = val
+                        makeChord(button_root[i])
+                    elif i == 1:
+                        chord_voicing = (val//8) - 8
+                        makeChord(button_root[i])
+                    elif i == 2:
+                        midi.send_message("voice", 0, "cutoff", val)
+                    elif i == 3:
+                        notes = [-3,-2,-1,1,2] # available roots for button 3
+                        button_root[3] = notes[val // 26] # (val // 26) is the same as math.floor(val/32)
                     
                     pot_state[i] = val
 #                 if DEBUG: print(msg)
@@ -91,18 +126,28 @@ while True:
     if now  - clock_timer > bpm_seconds:
         clock_timer = now
         index += 1
+        num_buttons_held = sum(button_state)
         
-        index = index % 16
-        current_note = current_chord[index % len(current_chord)]
+        if num_buttons_held == 0:
+            continue
+        
+        elif num_buttons_held == 1:
+            if index % 2 > 0: continue
+            cur_index = index//2
+        else:  
+            cur_index = index % 16
+            
+        if arp_direction == "down": cur_index = 15-cur_index
+        current_note = current_chord[cur_index % len(current_chord)]
+        print(cur_index, arp_direction, current_note)
+#         print(current_chord)
         note_to_play = current_note
         
         # check which buttons are held
         play_note = False
-        for i in range(4):
-            if button_state[i] == 1:
-                play_note = True
-                print(index, "button", i, current_note)
-                note_to_play = current_note + button_root[i]
+        if button_state[newest_button] == 1:
+            play_note = True
+            note_to_play = current_note + button_root[newest_button]
                 
         if play_note:
             note_to_play = degreeToMidi( note_to_play)
@@ -110,3 +155,5 @@ while True:
             print(note_to_play)
             midi.send_message("voice", 0, "pitch", note_to_play)
             midi.send_message("voice", 0, "trigger", 0)
+
+

@@ -6609,10 +6609,12 @@
 #X obj 261 133 unpack s f f f;
 #X obj 248 249 pack s f f f;
 #X msg 283 286 \$3 \$1 \$2;
+#X obj 322 558 voice1;
 #X connect 12 0 56 0;
 #X connect 12 0 57 0;
 #X connect 13 0 26 0;
 #X connect 13 0 37 0;
+#X connect 13 1 60 0;
 #X connect 14 0 11 0;
 #X connect 14 0 17 0;
 #X connect 14 0 20 0;
@@ -6657,3 +6659,5 @@
 #X connect 58 0 59 0;
 #X connect 59 0 54 0;
 #X connect 59 0 13 0;
+#X connect 60 0 14 1;
+#X connect 60 0 15 1;
