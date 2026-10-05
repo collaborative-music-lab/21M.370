@@ -7,11 +7,14 @@ import sensors, midi, seq, mapping # custom 21M.370 modules
 
 from data import *
 
-# pins for custom creativitas pcb
-
 mapping.send_mapping()
 
-DEBUG = True 
+DEBUG = True
+bpm = 90
+# musical_scale = [0,2,3,5,7,8,10] # c minor scale
+musical_scale = [0,2,4,5,7,9,11] # c major scale
+phrase_length = 6
+transpose = 7 # to set the overall key
 
 pot = [
     sensors.Potentiometer(4),
@@ -35,7 +38,6 @@ pixel[0] = (255, 100, 0)
 
 button_timer = 0
 clock_timer = 0
-bpm = 100
 bpm_seconds = 60/bpm/4
 index = 0
 sensor_timer = 0
@@ -45,7 +47,6 @@ pot_state = [0,0,0,0]
 
 # chord variables
 current_chord = [0,2,4]
-scale = [0,2,3,5,7,8,10] # c minor scale
 base_octave = 4
 
 # arpeggio variables
@@ -56,9 +57,9 @@ arp_direction = "up"
 newest_button = 0
 
 def degreeToMidi(interval):
-    extraOctaves = math.floor( interval / len(scale) )
-    interval = interval % len(scale)
-    note = scale[interval] + (base_octave + extraOctaves) * 12
+    extraOctaves = math.floor( interval / len(musical_scale) )
+    interval = interval % len(musical_scale)
+    note = musical_scale[interval] + (base_octave + extraOctaves) * 12
     
     return note
 
@@ -104,8 +105,18 @@ while True:
         if 1:
             msg = []
             for i in range(4):
+                
+                
                 val = pot[i].new()
-                msg.append(val)
+#                 alpha = 0.5
+#                 new_val =  (1-alpha)*val + alpha*pot_state[i]
+#                 pot_state[i] = new_val
+# #                 if val == False:s break
+#                 new_val = scale(new_val, 0, 3900, 0, 127, 2)
+#                 if new_val> 127: new_val = 127
+#                 print(math.floor(new_val))
+#                 break
+#                 msg.append(val)
                 if val != False:
                     val = val >> 5 # convert 12 to 7-bit
                     if i == 0:
@@ -115,7 +126,9 @@ while True:
                         chord_voicing = (val//8) - 8
                         makeChord(button_root[i])
                     elif i == 2:
-                        midi.send_message("voice", 0, "cutoff", val)
+                        midi.send_message("voice", 0, "cutoff", scale(val, 0, 127, 9, 127))
+                        midi.send_param("bob-filter", 1, "FM-/+", 90)
+                        midi.send_param("slope", 1, "FALL", scale(val, 0, 127, 127, 40))
                     elif i == 3:
                         notes = [-3,-2,-1,1,2] # available roots for button 3
                         button_root[3] = notes[val // 26] # (val // 26) is the same as math.floor(val/32)
@@ -128,18 +141,24 @@ while True:
         index += 1
         num_buttons_held = sum(button_state)
         
+        cur_index = index # set the total number of beats per phrase
+        
         if num_buttons_held == 0:
             continue
         
         elif num_buttons_held == 1:
-            if index % 2 > 0: continue
-            cur_index = index//2
-        else:  
-            cur_index = index % 16
+            if cur_index % 2 > 0: continue
+            cur_index = cur_index//2
+        else:
+            cur_index = cur_index
             
-        if arp_direction == "down": cur_index = 15-cur_index
+        cur_index = cur_index % phrase_length # set the total number of beats per phrase
+        
+        if arp_direction == "down": cur_index = phrase_length-cur_index-1
+        
         current_note = current_chord[cur_index % len(current_chord)]
-        print(cur_index, arp_direction, current_note)
+        
+        print(cur_index, arp_direction, current_note, current_chord)
 #         print(current_chord)
         note_to_play = current_note
         
@@ -151,9 +170,15 @@ while True:
                 
         if play_note:
             note_to_play = degreeToMidi( note_to_play)
+            note_to_play += transpose # changing the key
 #             note_to_play += base_octave*12
-            print(note_to_play)
+            # print(note_to_play)
             midi.send_message("voice", 0, "pitch", note_to_play)
             midi.send_message("voice", 0, "trigger", 0)
 
 
+
+
+
+
+[ 10, 11, 10, 8, 27,10,9,12]

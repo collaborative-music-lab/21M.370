@@ -1,0 +1,6 @@
+Adafruit CircuitPython 10.3.1 on 2026-09-14; Waveshare ESP32-S3-Zero with ESP32S3
+Board ID:waveshare_esp32_s3_zero
+UID:4BA354EA85CB
+MAC:B4:3A:45:AE:58:BC
+boot.py output:
+USB MIDI enabled, USB HID disabled

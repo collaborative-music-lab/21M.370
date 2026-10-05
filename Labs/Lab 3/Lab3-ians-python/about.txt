@@ -1,0 +1,17 @@
+Arpy v1.0
+
+Arpeggio player / chord instrument
+- inspired by Orchid & other chord instruments
+
+Inputs (based on Knobby):
+- 4 pots: pins [1,2,3,4]
+- 4 buttons: pins :[6,7,8,9]
+
+Basic controls:
+- buttons control root note of chord
+    - roots are defined in button_root = [0,3,4,5]
+- pots:
+    1: chord_size: number of notes in chord
+    2: chord_voicing: lowest note of chord voicing
+    3: synth timbre (cutoff and env length)
+    4: root of 4th button, e.g. button_root[3]
