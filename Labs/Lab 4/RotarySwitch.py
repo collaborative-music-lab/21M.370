@@ -18,6 +18,7 @@ class RotarySwitch:
         
     def new(self):
         val = self.pot.read()
+        # use one-pole lpf to smooth incoming data
         # check new value against prev_value plus schmitt trigger thresholds
         # return false if the value hasn't changed
         # else return (the new state + 1)
