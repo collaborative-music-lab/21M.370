@@ -9,6 +9,7 @@ from data import *
 
 DEBUG = True
 
+# starter code for our class
 class RotarySwitch:
     def __init__(self, pin, num_states = 5):
         self.pot = sensors.Potentiometer(pin)
@@ -28,7 +29,8 @@ class RotarySwitch:
     def makeSplitPoints(self, num):
         # return an array with the split points for the different states
         
-switch = RotarySwitch(1)
+#create an instance of our class
+switch = RotarySwitch(1) # pin number of our potentiometer is the argument
 
 # Main code
 sensor_timer = 0
