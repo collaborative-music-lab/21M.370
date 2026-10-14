@@ -2,12 +2,10 @@ import board
 import busio
 import adafruit_mpr121
 import time
-import utils
-import setup
+import data
 
-# Create the I2C bus interface
-# i2c = busio.I2C(board.IO44, board.IO43)
-
+charge_current = 63
+charge_time = 7
 # Initialize the MPR121 sensor
 # Note: The default I2C address is 0x5A
 class MPR121(adafruit_mpr121.MPR121):
@@ -21,7 +19,7 @@ class MPR121(adafruit_mpr121.MPR121):
         self.delta_cache = [0] * num_sensors
         
         # keep track of touch state
-        self.triggers = [utils.SchmittTrigger(lo=40, hi=100, inverted=False) for _ in range(num_sensors)]
+        self.triggers = [data.SchmittTrigger(lo=40, hi=100, inverted=False) for _ in range(num_sensors)]
         self.touch_states = [False] * num_sensors
         
         # buffers for raw data
@@ -162,5 +160,6 @@ class MPR121(adafruit_mpr121.MPR121):
         time.sleep(.1)
         self._write_register_byte(0x5E, 0x00)
         self._write_register_byte(0x5E, 0x3F)
-        self.set_sensitivity(current=setup.charge_current, charge_time=setup.charge_time) #current from 1-63, charge_time from 1 to 7
+        self.set_sensitivity(current=charge_current, charge_time=charge_time) #current from 1-63, charge_time from 1 to 7
+
 

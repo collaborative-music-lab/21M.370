@@ -162,3 +162,4 @@ class MPR121(adafruit_mpr121.MPR121):
         self._write_register_byte(0x5E, 0x3F)
         self.set_sensitivity(current=charge_current, charge_time=charge_time) #current from 1-63, charge_time from 1 to 7
 
+

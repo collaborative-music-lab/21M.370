@@ -5,6 +5,7 @@ import digitalio
 from sensors.mpr121 import MPR121
 
 cap = MPR121()
+cap.set_sensitivity(63, 0) # (0-63) and (0-7)
 
 values = [0]*12
 
