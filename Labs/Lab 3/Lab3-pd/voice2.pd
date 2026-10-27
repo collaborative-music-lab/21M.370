@@ -24,8 +24,9 @@
 #X obj 805 91 / 127;
 #X obj 805 117 / 100;
 #X obj 805 143 sig~;
+#X obj -18 419 ladder-filter 1;
 #X connect 0 0 1 0;
-#X connect 1 0 2 0;
+#X connect 1 0 25 0;
 #X connect 2 0 4 0;
 #X connect 3 0 0 2;
 #X connect 5 0 21 0;
@@ -53,3 +54,4 @@
 #X connect 22 0 23 0;
 #X connect 23 0 24 0;
 #X connect 24 0 0 0;
+#X connect 25 0 2 0;
