@@ -3,7 +3,7 @@
 import board, analogio, digitalio # hardware imports
 import usb_midi, adafruit_midi, neopixel # adafruit software modules in lib folder
 import time, math, random # standard python modules
-import sensors, midi, seq, mapping, data # custom 21M.370 modules
+import sensors, midi, data # custom 21M.370 modules
 
 
 DEBUG = False
@@ -60,8 +60,16 @@ while True:
     if time.monotonic()- control_timer >= control_interval:
         control_timer = time.monotonic()
         
+        # monitor messages here!
         if DEBUG:
-            print(imu.tilt)
+            print(imu.accel)
+#             print(imu.gyro)
+#             print(imu.tilt)
+#             print(imu.angle)
+#             print(imu.magnitude)
+#             print(imu.jerk)
+            
+            
         x_amplitude = data.scale( abs(imu.tilt[0]), 0, 90, 0, 127)
         y_amplitude = data.scale( abs(imu.tilt[0]), 0, 90, 0, 127)
         z_amplitude = data.scale( abs(imu.tilt[0]), 0, 90, 0, 127)
