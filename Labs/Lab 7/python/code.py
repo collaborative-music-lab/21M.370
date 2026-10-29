@@ -6,7 +6,7 @@ import time, math, random # standard python modules
 import sensors, midi, data # custom 21M.370 modules
 
 
-DEBUG = False
+DEBUG = True
 
 # PD PARAMETERS
 midi.send_param("bandpass-filter", 1, "CUTOFF", 0)
@@ -19,8 +19,8 @@ midi.send_param("basic-lfo", 4, "FREQ", 60)
 
 
 ### IMU SETUP ###
-lsm6 = sensors.IMU(board_type="LSM6", SDA=board.IO44, SCL=board.IO43)
-# lsm6 = sensors.IMU(board_type="BMI160", SDA=board.IO44, SCL=board.IO43)
+# lsm6 = sensors.IMU(board_type="LSM6")
+lsm6 = sensors.IMU(board_type="BMI160")
 
 imu = data.IMUProcessing() #create an instance of our IMUProcessing class
 
@@ -90,4 +90,5 @@ while True:
         if index == 0:
             imu.angle = [0,0,0]
             print('reset angles')
+
 
