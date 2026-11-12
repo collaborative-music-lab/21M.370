@@ -32,11 +32,16 @@ Groups:
 
 <iframe data-autoplay src="https://www.youtube.com/embed/ci-yB6EgVW4" width="960" height="540" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
+Devon, Diana, Charlotte
+
+
 ---
 
 # Marco Donnarumma
 
 <iframe data-autoplay src="https://www.youtube.com/embed/CAIh8FxLMtk" width="960" height="540" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+Saga, Eugene, Alex
 
 
 ---
@@ -47,11 +52,15 @@ Groups:
 
 https://youtu.be/pzz-rd0I76Q?t=5458
 
+Evan, Jayden, Jieruei, Eric
+
 ---
 
 # Melody Chua
 
 <iframe data-autoplay src="https://www.youtube.com/embed/rgGhU9Yac3k" width="960" height="540" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
 
 ---
 
